@@ -1,0 +1,28 @@
+{{- $app := pluck .Values.appname .Values.apps | first }}
+
+{{- if $app.service.ingress }}
+
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: {{.Values.appname}}
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/custom-http-errors: "404,502"
+    nginx.ingress.kubernetes.io/default-backend: error-pages
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "180"
+    nginx.ingress.kubernetes.io/proxy-body-size: "10m"
+    kubernetes.io/tls-acme: "true"
+    cert-manager.io/cluster-issuer: "letsencrypt"
+spec:
+  tls:
+    - hosts:
+      - {{ $app.service.ingress.host }}
+  rules:
+    - host: {{ $app.service.ingress.host }}
+      http:
+        paths:
+          - backend:
+              serviceName: {{ .Values.appname }}
+              servicePort: 80
+{{- end}}

@@ -1,0 +1,26 @@
+{{- $app := pluck .Values.appname .Values.apps | first }}
+
+{{- if $app }}
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ .Values.appname }}
+  labels:
+    app: {{ .Values.appname }}
+spec:
+  ports:
+{{ toYaml $app.service.ports | indent 4 }}
+  {{- if $app.service.clusterIP }}
+  clusterIP: {{ $app.service.clusterIP }}
+  {{- end }}
+  selector:
+  {{- if $app.service.selector }}
+{{ toYaml $app.service.selector | indent 4 }}
+  {{- else }}
+    app: {{ .Values.appname }}
+  {{- end }}
+  type: {{ $app.service.type }}
+ 
+---
+{{- end}}

@@ -2,25 +2,26 @@
 
 {{- if $app }}
 
+{{- range $service := $app.services }}
 kind: Service
 apiVersion: v1
 metadata:
-  name: {{ .Values.appname }}
+  name: {{ $service.name }}
   labels:
-    app: {{ .Values.appname }}
+    app: {{ $service.name }}
 spec:
   ports:
-{{ toYaml $app.service.ports | indent 4 }}
-  {{- if $app.service.clusterIP }}
-  clusterIP: {{ $app.service.clusterIP }}
+{{ toYaml $service.ports | indent 4 }}
+  {{- if $service.clusterIP }}
+  clusterIP: {{ $service.clusterIP }}
   {{- end }}
   selector:
-  {{- if $app.service.selector }}
-{{ toYaml $app.service.selector | indent 4 }}
+  {{- if $service.selector }}
+{{ toYaml $service.selector | indent 4 }}
   {{- else }}
-    app: {{ .Values.appname }}
+    app: {{ $service.name }}
   {{- end }}
-  type: {{ $app.service.type }}
- 
----
+  type: {{ $service.type }}
+{{- end}}
+
 {{- end}}

@@ -1,11 +1,12 @@
 {{- $app := pluck .Values.appname .Values.apps | first }}
 
-{{- if $app.service.ingress }}
+{{- range $service := $app.services }}
 
+{{- if $service.ingress }}
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
-  name: {{.Values.appname}}
+  name: {{ $service.name }}
   annotations:
     kubernetes.io/ingress.class: "nginx"
     nginx.ingress.kubernetes.io/custom-http-errors: "404,502"
@@ -17,12 +18,14 @@ metadata:
 spec:
   tls:
     - hosts:
-      - {{ $app.service.ingress.host }}
+      - {{ $service.ingress.host }}
   rules:
-    - host: {{ $app.service.ingress.host }}
+    - host: {{ $service.ingress.host }}
       http:
         paths:
           - backend:
-              serviceName: {{ .Values.appname }}
+              serviceName: {{ $service.name }}
               servicePort: 80
+{{- end}}
+
 {{- end}}

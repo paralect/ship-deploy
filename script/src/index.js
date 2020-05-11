@@ -41,7 +41,7 @@ const buildAndPushImage = async ({ dockerFilePath, dockerRepo, dockerContextDir,
 }
 
 const pushToKubernetes = async ({ imageTag, appName }) => {
-  const deployDir = `${config.rootDir}/k8s-deploy/app`;
+  const deployDir = `${config.rootDir}/deploy/app`;
 
   if (config.kubeConfig) {
     console.log('Creating kubeconfig');

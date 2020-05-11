@@ -52,14 +52,15 @@ apps:
       ports:
         - containerPort: 3002
           protocol: TCP
-    service:
-      type: ClusterIP
-      ports:
-        - protocol: TCP
-          port: 80
-          targetPort: 3002
-      ingress:
-        host: app.paralect.net
+    services:
+      - name: web
+        type: ClusterIP
+        ports:
+          - protocol: TCP
+            port: 80
+            targetPort: 3002
+        ingress:
+          host: app.paralect.net
 
   landing:
     deployment:
@@ -77,14 +78,15 @@ apps:
       ports:
         - containerPort: 3000
           protocol: TCP
-    service:
-      type: ClusterIP
-      ports:
-        - protocol: TCP
-          port: 80
-          targetPort: 3000
-      ingress:
-        host: landing.paralect.net
+    services:
+      - name: landing
+        type: ClusterIP
+        ports:
+          - protocol: TCP
+            port: 80
+            targetPort: 3000
+        ingress:
+          host: landing.paralect.net
 
 imageCredentials:
   enabled: true

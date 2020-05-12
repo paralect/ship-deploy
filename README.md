@@ -28,7 +28,7 @@ sh ./bin/deploy-cert-manager.sh
 
 Update ci host
 
-[ci values](dependencies/drone-ci/values/values.yml)
+[ci values](dependencies/drone-ci/drone/values/values.yml)
 
 Create OAuth App on github (Settings -> Developer settings -> OAuth Apps -> New OAuth App)
 

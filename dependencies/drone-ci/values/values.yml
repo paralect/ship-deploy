@@ -3,7 +3,6 @@ service:
 
 sourceControl:
   provider: github
-  secret: drone-server-secrets
 
 server:
   host: ci.paralect.net

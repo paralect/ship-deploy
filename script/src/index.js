@@ -50,7 +50,7 @@ const pushToKubernetes = async ({ imageTag, appName }) => {
   }
 
   await execCommand(`
-    helm upgrade --install apps-${appName} ${deployDir} --namespace app \
+    helm upgrade --install apps-${appName} ${deployDir} --namespace ${config.namespace} \
       --set appname=${appName} \
       --set imagesVersion=${imageTag} \
       -f ${deployDir}/values/values.yml \

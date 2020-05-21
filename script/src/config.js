@@ -23,6 +23,8 @@ module.exports = {
 
   service: ENV.SERVICE,
 
+  namespace: ENV.NAMESPACE || 'app',
+
   kubeConfig: ENV.KUBE_CONFIG,
 
   home: ENV.HOME,

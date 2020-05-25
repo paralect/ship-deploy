@@ -106,7 +106,7 @@ Currently we are using [drone CI](https://github.com/helm/charts/tree/master/sta
 
 Before setup:
 
-Update CI host by changing [CI helm chart values](dependencies/drone-ci/drone/values/values.yml)
+Update CI host by changing [CI helm chart values](dependencies/drone-ci/values/values.yml)
 
 Create OAuth App on GitHub (Settings -> Developer settings -> OAuth Apps -> New OAuth App)
 
@@ -134,7 +134,7 @@ By default app deploys in `app` namespace. If you want to use one Kubernetes clu
 
 For manual deployments we are using script. This script will deploy only one service. It will build image, push it to DockerHub and then push it to Kubernetes cluster
 
-Install dependencies. In `script` folder run `npm i`
+Install dependencies. In [script folder](script) run `npm i`
 
 Update [script config](script/src/config.js) values
 

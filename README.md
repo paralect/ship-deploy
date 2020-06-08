@@ -1,12 +1,22 @@
 # Getting Started
 
-Deploy scripts for Kubernetes. Install kubectl and helm client before using it
+Deploy scripts for Kubernetes
+
+External services you need:
+- Kubernetes cluster (you can create it on [Digital Ocean](https://www.digitalocean.com/) for ex.)
+- [DockerHub](https://hub.docker.com/) repos for you services (api, web, landing)
+- DNS provider account (ex. [cloudflare](https://www.cloudflare.com/))
 
 [Kubernetes concepts](https://kubernetes.io/docs/concepts/)
 
-Kubectl is a command line tool for controlling Kubernetes clusters. To install kubectl follow [kubectl installation docs](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
+Install kubectl and helm client before using it
 
-Helm is the package manager for Kubernetes. Currently we are using helm v2. To install helm client follow [helm installation docs](https://v2.helm.sh/docs/install/)<br/>
+Kubectl is a command line tool for controlling Kubernetes clusters. To install kubectl follow [kubectl installation docs](https://kubernetes.io/docs/tasks/tools/install-kubectl/)<br/>
+After that you can create `.kube` folder in you home directory (if it not exist). Put your Kubernetes cluster to `.kube/config` file (or merge your cluster config into existing one)<br/>
+To check if everything works run `kubectl get pods -A` in terminal. You should see some pods there<br/>
+*Helpful [tool](https://github.com/ahmetb/kubectx) for managing several Kubernetes clusters*
+
+Helm is a package manager for Kubernetes. **Currently we are using helm v2.** To install helm client follow [helm installation docs](https://v2.helm.sh/docs/install/)<br/>
 *You do not need to install tiller*
 
 ## Deploy scripts structure
@@ -27,7 +37,7 @@ Dependencies include:
 - cluster dependencies ([tiller](https://v2.helm.sh/docs/install/) (helm server), [regcred](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/) (for pulling docker images from private dockerhub repos), nginx)
 - app dependencies (redis, mongodb)
 
-Before setup them do not forget to set your db name and db user username by changing [mongo helm chart values](dependencies/mongodb/values/values.yaml)
+Before setup them do not forget to set your db name and db user username by changing [mongo helm chart values](dependencies/mongodb/values/values.yml)
 
 To setup dependencies run command:
 
@@ -35,7 +45,7 @@ To setup dependencies run command:
 sh ./bin/deploy-dependencies.sh
 ```
 
-mongodb connection string will look like `"mongodb://{db user}:{db user password}@{db service name}.{db namespace}.svc.cluster.local:{db port}/{db name}"`
+mongodb connection string (for connection from deployed app) will look like `"mongodb://{db user}:{db user password}@{db service name}.{db namespace}.svc.cluster.local:{db port}/{db name}"`
 
 Default values:
 - db user - `admin`
@@ -44,10 +54,10 @@ Default values:
 - db port - `27017`
 - db name - `staging-db`
 
-To get mongodb password run command:
+To get mongodb password for created user run command:
 
 ```
-kubectl get secret mongodb -n mongodb -o yaml
+kubectl get secret --namespace mongodb mongodb -o jsonpath={.data.mongodb-password}
 ```
 
 *Password will be in base64. To use it you need to encode it. Use any encoder (ex. [this](https://www.base64decode.org/))*
@@ -106,7 +116,18 @@ Currently we are using [drone CI](https://github.com/helm/charts/tree/master/sta
 
 Before setup:
 
+Move [drone pipeline file](dependencies/drone-ci/.drone.yml) to root of you project repo. Update it if needed
+
 Update CI host by changing [CI helm chart values](dependencies/drone-ci/values/values.yml)
+
+If you didn't setup cert-manager you need to change protocol to http and remove lines in [CI helm chart values](dependencies/drone-ci/values/values.yml):
+
+```
+tls:
+  - hosts:
+      - ci.paralect.net
+    secretName: letsencrypt
+```
 
 Create OAuth App on GitHub (Settings -> Developer settings -> OAuth Apps -> New OAuth App)
 
@@ -116,7 +137,12 @@ Run command:
 sh ./bin/deploy-ci.sh
 ```
 
-Go to drone CI host and turn it on for your project repo. Add CI variables (kubernetes token, api server etc.)
+After that go to drone CI host and turn it on for your project repo
+
+Add CI variables:
+- docker_username (dockerhub username)
+- docker_password (dockerhub password)
+- kube_config (your cluster config)
 
 ## Update project specific variables
 

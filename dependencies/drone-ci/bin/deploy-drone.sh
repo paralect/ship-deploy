@@ -8,5 +8,5 @@ read -p "admin github: " admin
 helm upgrade --install drone-release stable/drone --namespace drone-ci \
   -f values/values.yml \
   --set sourceControl.github.clientID=$clientID \
-  --set sourceControl.github.clientSecretKey=$clientSecret \
+  --set sourceControl.github.clientSecretValue=$clientSecret \
   --set server.adminUser=$admin \

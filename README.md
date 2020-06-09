@@ -4,7 +4,7 @@ Deploy scripts for Kubernetes
 
 External services you need:
 - Kubernetes cluster (you can create it on [Digital Ocean](https://www.digitalocean.com/) for ex.)
-- [DockerHub](https://hub.docker.com/) repos for you services (api, web, landing)
+- [DockerHub](https://hub.docker.com/) repos for you services (api, web, landing, admin)
 - DNS provider account (ex. [cloudflare](https://www.cloudflare.com/))
 
 [Kubernetes concepts](https://kubernetes.io/docs/concepts/)

@@ -5,6 +5,7 @@ version=$(git rev-parse --verify HEAD)
 api_image=paralect/ship-api
 web_image=paralect/ship-web
 landing_image=paralect/ship-landing
+admin_image=paralect/ship-admin
 
 echo Prepare api image
 docker build -t "$api_image:$version" ./api
@@ -20,3 +21,8 @@ echo Prepare landing image
 docker build -t "$landing_image:$version" ./landing
 docker tag "$landing_image:$version" $landing_image:latest
 docker push "$landing_image:$version"
+
+echo Prepare landing image
+docker build -t "$admin_image:$version" ./admin
+docker tag "$admin_image:$version" $admin_image:latest
+docker push "$admin_image:$version"

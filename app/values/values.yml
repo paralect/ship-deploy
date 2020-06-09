@@ -88,6 +88,32 @@ apps:
         ingress:
           host: landing.paralect.net
 
+  admin:
+    deployment:
+      repository: paralect/ship-admin
+      replicas: 1
+      livenessProbe:
+        path: /health
+        port: 3003
+        initialDelaySeconds: 3
+        periodSeconds: 5
+      imagePullPolicy: Always
+      env:
+        - name: APP_ENV
+          value: "staging"
+      ports:
+        - containerPort: 3003
+          protocol: TCP
+    services:
+      - name: admin
+        type: ClusterIP
+        ports:
+          - protocol: TCP
+            port: 80
+            targetPort: 3003
+        ingress:
+          host: admin.paralect.net
+
 imageCredentials:
   enabled: true
   secretName: regcred

@@ -5,6 +5,7 @@ const deployConfig =  {
   api: { dockerRepo: 'paralect/ship-api', dir: `${rootDir}/api` },
   web: { dockerRepo: 'paralect/ship-web', dir: `${rootDir}/web` },
   landing: { dockerRepo: 'paralect/ship-landing', dir: `${rootDir}/landing` },
+  admin: { dockerRepo: 'paralect/ship-admin', dir: `${rootDir}/admin` },
 };
 
 Object.keys(deployConfig).forEach(serviceName => {

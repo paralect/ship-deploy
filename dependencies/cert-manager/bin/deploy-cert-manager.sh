@@ -11,6 +11,6 @@ helm repo add jetstack https://charts.jetstack.io
 helm repo update
 helm install --name cert-manager --namespace cert-manager --version v0.15.0 jetstack/cert-manager
 
-helm upgrade --install cert-cluster-issuer ./cert-cluster-issuer \
+helm upgrade --install cert-cluster-issuer ./cert-cluster-issuer --namespace cert-manager \
   -f ./cert-cluster-issuer/values/values.yml \
   --set clusterIssuer.acme.email=$email \

@@ -9,6 +9,8 @@ server:
   kubernetes:
     enabled: false
   protocol: https
+  nodeSelector:
+    doks.digitalocean.com/node-pool: pool-ship-drone
 
 ingress:
   enabled: true
@@ -23,6 +25,7 @@ ingress:
     customHttpErrors: "404,502"
     nginx.ingress.kubernetes.io/default-backend: error-pages
     kubernetes.io/tls-acme: "true"
+    cert-manager.io/cluster-issuer: "letsencrypt"
 
 agent:
   volumes:
@@ -32,3 +35,5 @@ agent:
   volumeMounts:
     - name: docker-socket
       mountPath: /var/run/docker.sock
+  nodeSelector:
+    doks.digitalocean.com/node-pool: pool-ship-drone

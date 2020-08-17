@@ -1,0 +1,9 @@
+master:
+  nodeSelector:
+    doks.digitalocean.com/node-pool: pool-ship
+
+slave:
+  nodeSelector:
+    doks.digitalocean.com/node-pool: pool-ship
+
+password: super-secured-password

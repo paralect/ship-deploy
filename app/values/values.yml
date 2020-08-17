@@ -4,7 +4,7 @@ namespace: app
 apps:
   api:
     deployment:
-      repository: paralect/ship-api
+      repository: registry.digitalocean.com/paralect/ship-api
       replicas: 1
       livenessProbe:
         path: /health
@@ -12,6 +12,8 @@ apps:
         initialDelaySeconds: 6000
         periodSeconds: 12000
       imagePullPolicy: Always
+      nodeSelector:
+        doks.digitalocean.com/node-pool: pool-ship
       env:
         - name: APP_ENV
           value: "staging"
@@ -27,6 +29,9 @@ apps:
             targetPort: 3001
         ingress:
           host: api.paralect.net
+          secretName: letsencrypt-api
+        selector:
+          app: api
       - name: socket
         type: ClusterIP
         ports:
@@ -35,10 +40,13 @@ apps:
             targetPort: 8082
         ingress:
           host: socket.paralect.net
+          secretName: letsencrypt-socket
+        selector:
+          app: api
 
   web:
     deployment:
-      repository: paralect/ship-web
+      repository: registry.digitalocean.com/paralect/ship-web
       replicas: 1
       livenessProbe:
         path: /health
@@ -46,6 +54,8 @@ apps:
         initialDelaySeconds: 3
         periodSeconds: 5
       imagePullPolicy: Always
+      nodeSelector:
+        doks.digitalocean.com/node-pool: pool-ship
       env:
         - name: APP_ENV
           value: "staging"
@@ -61,10 +71,13 @@ apps:
             targetPort: 3002
         ingress:
           host: app.paralect.net
+          secretName: letsencrypt-web
+        selector:
+          app: web
 
   landing:
     deployment:
-      repository: paralect/ship-landing
+      repository: registry.digitalocean.com/paralect/ship-landing
       replicas: 1
       livenessProbe:
         path: /health
@@ -87,10 +100,13 @@ apps:
             targetPort: 3000
         ingress:
           host: landing.paralect.net
+          secretName: letsencrypt-landing
+        selector:
+          app: landing
 
   admin:
     deployment:
-      repository: paralect/ship-admin
+      repository: registry.digitalocean.com/paralect/ship-admin
       replicas: 1
       livenessProbe:
         path: /health
@@ -113,6 +129,9 @@ apps:
             targetPort: 3003
         ingress:
           host: admin.paralect.net
+          secretName: letsencrypt-admin
+        selector:
+          app: admin
 
 imageCredentials:
   enabled: true

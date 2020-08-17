@@ -17,15 +17,17 @@ metadata:
     cert-manager.io/cluster-issuer: "letsencrypt"
 spec:
   tls:
-    - hosts:
-      - {{ $service.ingress.host }}
+  - hosts:
+    - {{ $service.ingress.host }}
+    secretName: {{ $service.ingress.secretName }}
   rules:
-    - host: {{ $service.ingress.host }}
-      http:
-        paths:
-          - backend:
-              serviceName: {{ $service.name }}
-              servicePort: 80
+  - host: {{ $service.ingress.host }}
+    http:
+      paths:
+        - backend:
+            serviceName: {{ $service.name }}
+            servicePort: 80
+---
 {{- end}}
 
 {{- end}}

@@ -2,4 +2,4 @@
 cd "$( dirname "${BASH_SOURCE[0]}" )"/../
 
 helm install --name redis-release --namespace redis stable/redis \
-  -f ./values/values.yml \
+  -f ./values/values.yml

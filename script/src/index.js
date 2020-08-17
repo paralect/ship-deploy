@@ -59,7 +59,7 @@ const pushToKubernetes = async ({ imageTag, appName }) => {
 
 const deploy = async () => {
   if (config.dockerRegistry.password) {
-    await execCommand(`docker login --username ${config.dockerRegistry.username} --password ${config.dockerRegistry.password}`);
+    await execCommand(`docker login --username ${config.dockerRegistry.username} --password ${config.dockerRegistry.password} registry.digitalocean.com`);
   }
   const deployConfig = await askServiceToDeploy();
 

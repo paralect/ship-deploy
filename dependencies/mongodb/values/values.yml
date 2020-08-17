@@ -1,6 +1,9 @@
 mongodbUsername: admin
 mongodbDatabase: staging-db
 
+nodeSelector:
+  doks.digitalocean.com/node-pool: pool-ship
+
 replicaSet:
   enabled: true
   replicas:

@@ -52,6 +52,10 @@ spec:
 {{ toYaml $app.deployment.resources | indent 12 }}
           {{- end }}
           imagePullPolicy: {{ $app.deployment.imagePullPolicy }}
+    {{- if $app.deployment.nodeSelector }}
+    nodeSelector:
+{{ toYaml $app.deployment.nodeSelector | indent 8 }}
+      {{- end }}
       {{- if $app.deployment.configMountPath }}
       volumes:
         - name: config-volume

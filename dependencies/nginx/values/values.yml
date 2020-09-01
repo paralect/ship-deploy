@@ -3,7 +3,7 @@ controller:
     enabled: true
   nodeSelector:
     doks.digitalocean.com/node-pool: pool-ship
- 
+
 rbac:
   create: true
 

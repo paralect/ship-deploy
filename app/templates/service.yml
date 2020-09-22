@@ -19,7 +19,7 @@ spec:
   {{- if $service.selector }}
 {{ toYaml $service.selector | indent 4 }}
   {{- else }}
-    app: {{ $service.name }}
+    app: {{ $app.name }}
   {{- end }}
   type: {{ $service.type }}
 ---

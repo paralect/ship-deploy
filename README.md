@@ -82,7 +82,7 @@ kubectl expose pod {db pod name} --type=LoadBalancer -n mongodb
 To see cluster nginx external ip run command:
 
 ```
-kubectl get services -n ingress-nginx-helm
+kubectl get services -n ingress-nginx
 ```
 
 *ip doesn't appear immediately after dependencies setup. It can take a few minutes*

@@ -1,5 +1,4 @@
 environment: staging
-namespace: app
 
 apps:
   api:
@@ -13,7 +12,7 @@ apps:
         periodSeconds: 12000
       imagePullPolicy: Always
       nodeSelector:
-        doks.digitalocean.com/node-pool: pool-ship
+        doks.digitalocean.com/node-pool: pool-app
       env:
         - name: APP_ENV
           value: "staging"
@@ -55,7 +54,7 @@ apps:
         periodSeconds: 5
       imagePullPolicy: Always
       nodeSelector:
-        doks.digitalocean.com/node-pool: pool-ship
+        doks.digitalocean.com/node-pool: pool-app
       env:
         - name: APP_ENV
           value: "staging"

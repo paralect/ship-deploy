@@ -10,7 +10,7 @@ server:
     enabled: false
   protocol: https
   nodeSelector:
-    doks.digitalocean.com/node-pool: pool-ship-drone
+    doks.digitalocean.com/node-pool: pool-drone
 
 ingress:
   enabled: true
@@ -36,4 +36,4 @@ agent:
     - name: docker-socket
       mountPath: /var/run/docker.sock
   nodeSelector:
-    doks.digitalocean.com/node-pool: pool-ship-drone
+    doks.digitalocean.com/node-pool: pool-drone

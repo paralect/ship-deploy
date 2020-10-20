@@ -48,8 +48,8 @@ apps:
       repository: registry.digitalocean.com/paralect/ship-web
       replicas: 1
       livenessProbe:
-        path: /health
-        port: 3002
+        path: /
+        port: 80
         initialDelaySeconds: 3
         periodSeconds: 5
       imagePullPolicy: Always
@@ -59,7 +59,7 @@ apps:
         - name: APP_ENV
           value: "staging"
       ports:
-        - containerPort: 3002
+        - containerPort: 80
           protocol: TCP
     services:
       - name: web
@@ -67,7 +67,7 @@ apps:
         ports:
           - protocol: TCP
             port: 80
-            targetPort: 3002
+            targetPort: 80
         ingress:
           host: app.paralect.net
           secretName: letsencrypt-web

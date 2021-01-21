@@ -14,4 +14,6 @@ const execCommand = async (command, options = {}) => {
   return execa(commandName, commandArguments, { stdio: 'inherit', ...options });
 };
 
-module.exports = { execCommand };
+module.exports = {
+  execCommand,
+};

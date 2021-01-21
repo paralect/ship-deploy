@@ -1,8 +1,9 @@
 const fs = require('fs');
+const execa = require('execa');
+const List = require('prompt-list');
 
 const config = require('./config');
 const { execCommand } = require('./util');
-const List = require('prompt-list');
 
 const askServiceToDeploy = async () => {
   const choices = Object.keys(config.deploy);
@@ -57,11 +58,31 @@ const pushToKubernetes = async ({ imageTag, appName, deployConfig }) => {
   `);
 }
 
+async function awsConfigure() {
+  await execCommand(`aws configure set aws_access_key_id ${config.AWS.accessKey}`);
+  await execCommand(`aws configure set aws_secret_access_key ${config.AWS.secretAccessKey}`);
+  await execCommand(`aws configure set region ${config.AWS.region}`);
+  await execCommand(`aws configure set output json`);
+}
+
+async function dockerLogin() {
+  const awsGetLoginPassword = execa.command(`aws --region ${config.AWS.region} ecr get-login-password`);
+
+  await execa.command(`docker login --password-stdin --username AWS ${config.AWS.accountId}.dkr.ecr.${config.AWS.region}.amazonaws.com`, {
+    stdin: awsGetLoginPassword.stdout,
+  });
+}
+
+async function updateKubeConfig() {
+  await execCommand(`aws eks --region ${config.AWS.region} update-kubeconfig --name ${config.clusterName}`);
+}
+
 const deploy = async () => {
-  if (config.dockerRegistry.password) {
-    await execCommand(`docker login --username ${config.dockerRegistry.username} --password ${config.dockerRegistry.password} registry.digitalocean.com`);
-  }
   const deployConfig = await askServiceToDeploy();
+
+  await awsConfigure();
+  await dockerLogin();
+  await updateKubeConfig();
 
   let imageTag = config.dockerRegistry.imageTag;
 

@@ -1,11 +1,22 @@
 const path = require('path');
 const rootDir = path.resolve(__dirname, './../../../');
 
+// AWS only
+
+// const DEFAULT_AWS_REGION = 'region-code';
+// const DEFAULT_AWS_ACCOUNT_ID = '666666666666';
+
 const deployConfig =  {
-  api: { dockerRepo: 'paralect/ship-api', dir: `${rootDir}/api` },
-  web: { dockerRepo: 'paralect/ship-web', dir: `${rootDir}/web` },
-  landing: { dockerRepo: 'paralect/ship-landing', dir: `${rootDir}/landing` },
-  admin: { dockerRepo: 'paralect/ship-admin', dir: `${rootDir}/admin` },
+  api: {
+    dockerRepo: 'paralect/ship-api',
+    dir: `${rootDir}/api`,
+    folder: 'api',
+  },
+  web: {
+    dockerRepo: 'paralect/ship-web',
+    dir: `${rootDir}/web`,
+    folder: 'web',
+  },
 };
 
 Object.keys(deployConfig).forEach(serviceName => {
@@ -24,13 +35,16 @@ module.exports = {
 
   service: ENV.SERVICE,
 
-  namespace: ENV.NAMESPACE || 'app',
+  environment: ENV.ENVIRONMENT || 'staging',
+
+  namespace: ENV.NAMESPACE || 'staging',
 
   kubeConfig: ENV.KUBE_CONFIG,
 
   home: ENV.HOME,
 
   dockerRegistry: {
+    // DO only
     username: ENV.DOCKER_AUTH_USERNAME,
     password: ENV.DOCKER_AUTH_PASSWORD,
 
@@ -38,4 +52,15 @@ module.exports = {
   },
 
   deploy: deployConfig,
+
+  // AWS only
+
+  // clusterName: ENV.CLUSTER_NAME || 'cluster-name',
+
+  // AWS: {
+  //   accessKey: ENV.AWS_ACCESS_KEY,
+  //   secretAccessKey: ENV.AWS_SECRET_ACCESS_KEY,
+  //   region: ENV.AWS_REGION || DEFAULT_AWS_REGION,
+  //   accountId: ENV.AWS_ACCOUNT_ID || DEFAULT_AWS_ACCOUNT_ID,
+  // },
 };

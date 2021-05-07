@@ -1,0 +1,24 @@
+prometheus:
+  server:
+    persistentVolume:
+      enabled: true
+  prometheusSpec:
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 40Gi
+
+grafana:
+  persistence:
+    enabled: true
+    storageClassName: prometheus
+    existingClaim: grafana-persistent-volume-claim-0
+
+loki:
+  config:
+    table_manager:
+      retention_deletes_enabled: true
+      retention_period: 336h    

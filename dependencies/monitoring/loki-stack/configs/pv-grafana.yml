@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pvc-grafana-0
+spec:
+  accessModes:
+  - ReadWriteOnce
+  awsElasticBlockStore:
+    volumeID: vol-01b6291a942bba7ce
+  capacity:
+    storage: 2Gi
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: prometheus
+  volumeMode: Filesystem

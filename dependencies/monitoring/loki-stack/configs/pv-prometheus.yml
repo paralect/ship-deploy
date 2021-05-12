@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pvc-prometheus-0
+  labels:
+    kind: prometheus-volume
+spec:
+  accessModes:
+  - ReadWriteOnce
+  awsElasticBlockStore:
+    volumeID: vol-084fa950215010a1c
+  capacity:
+    storage: 40Gi
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: prometheus
+  volumeMode: Filesystem

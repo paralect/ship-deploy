@@ -1,5 +1,6 @@
 redis:
   nodeSelector:
-    eks.amazonaws.com/nodegroup: pool-app
+    doks.digitalocean.com/node-pool: pool-app
 
+architecture: standalone
 password: super-secured-password

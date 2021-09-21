@@ -22,7 +22,7 @@ metadata:
 spec:
   type: ClusterIP
   selector:
-    app: api-socket
+    app: api
   ports:
   - protocol: TCP
     port: 8082

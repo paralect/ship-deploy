@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    app: prometheus
+    prometheus: prometheus-migration-prometheus
+  name: grafana-persistent-volume-claim-0
+  namespace: monitoring
+spec:
+  accessModes:
+  - ReadWriteOnce
+  dataSource: null
+  resources:
+    requests:
+      storage: 2Gi
+  storageClassName: prometheus
+  volumeMode: Filesystem
+  volumeName: pvc-grafana-0
+status:
+  accessModes:
+  - ReadWriteOnce
+  capacity:
+    storage: 2Gi

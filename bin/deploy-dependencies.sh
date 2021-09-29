@@ -5,3 +5,4 @@ sh ./dependencies/nginx/bin/deploy-nginx.sh
 sh ./dependencies/mongodb/bin/deploy-mongodb.sh
 sh ./dependencies/redis/bin/deploy-redis.sh
 sh ./dependencies/regcred/bin/create-docker-regcred.sh
+sh ./dependencies/monitoring/loki-stack/install.sh

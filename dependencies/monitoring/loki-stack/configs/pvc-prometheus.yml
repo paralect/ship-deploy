@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    app: prometheus
+    prometheus: prometheus-migration-prometheus
+  name: prometheus-prometheus-operator-prometheus-db-prometheus-prometheus-operator-prometheus-0
+  namespace: monitoring
+spec:
+  accessModes:
+  - ReadWriteOnce
+  dataSource: null
+  resources:
+    requests:
+      storage: 40Gi
+  storageClassName: prometheus
+  volumeMode: Filesystem
+  volumeName: pvc-prometheus-0
+status:
+  accessModes:
+  - ReadWriteOnce
+  capacity:
+    storage: 40Gi

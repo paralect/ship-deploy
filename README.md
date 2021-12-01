@@ -1,6 +1,6 @@
 # Getting Started
 
-Deploy scripts for Kubernetes
+Deploy scripts for Kubernetes 
 
 External services you need:
 - Kubernetes cluster (you can create it on [Digital Ocean](https://www.digitalocean.com/) for ex.)

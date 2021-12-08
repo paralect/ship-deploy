@@ -14,7 +14,7 @@ LABEL org.label-schema.vcs-ref=$VCS_REF \
 
 # Note: Latest version of kubectl may be found at:
 # https://github.com/kubernetes/kubernetes/releases
-ENV KUBE_LATEST_VERSION="v1.21.5"
+ENV KUBE_LATEST_VERSION="v1.22.4"
 
 # Note: Latest version of helm may be found at:
 # https://github.com/kubernetes/helm/releases

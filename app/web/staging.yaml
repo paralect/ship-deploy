@@ -1,3 +1,0 @@
-domain: app.paralect.net
-secretName: letsencrypt-staging-web
-environment: staging

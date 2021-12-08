@@ -25,7 +25,7 @@ spec:
           httpGet:
             path: /health
             port: 3001
-          initialDelaySeconds: 5
+          initialDelaySeconds: 100
           periodSeconds: 10
         env:
         - name: APP_ENV

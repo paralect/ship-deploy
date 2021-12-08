@@ -8,9 +8,9 @@ const config = {
   
   service: ENV.SERVICE,
   
-  environment: ENV.ENVIRONMENT,
+  environment: ENV.ENVIRONMENT || 'staging',
   
-  namespace: ENV.NAMESPACE,
+  namespace: ENV.NAMESPACE || 'staging',
   
   kubeConfig: ENV.KUBE_CONFIG,
   

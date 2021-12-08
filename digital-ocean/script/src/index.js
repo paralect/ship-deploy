@@ -46,7 +46,8 @@ const pushToKubernetes = async ({ imageTag, appName, deployConfig }) => {
   }
 
   await execCommand(`
-    helm upgrade --install apps-${config.environment}-${appName} ${deployDir} --namespace ${config.namespace} \
+    helm upgrade --install apps-${config.environment}-${appName} ${deployDir} \
+      --namespace ${config.namespace} --create-namespace \
       --set appname=${appName} \
       --set imagesVersion=${imageTag} \
       -f ${deployDir}/${config.environment}.yaml \

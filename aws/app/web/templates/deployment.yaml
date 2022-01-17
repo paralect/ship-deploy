@@ -19,9 +19,6 @@ spec:
       - name: web
         image: {{ .Values.awsAccountId }}.dkr.ecr.{{ .Values.awsRegion }}.amazonaws.com/web:{{ $.Values.imagesVersion }}
         imagePullPolicy: Always
-        env:
-        - name: NEXT_PUBLIC_APP_ENV
-          value: {{ .Values.environment }}
         ports:
         - containerPort: 3002
           protocol: TCP

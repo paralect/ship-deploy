@@ -31,8 +31,13 @@ const askServiceToDeploy = async () => {
   return serviceConfig;
 };
 
-const buildAndPushImage = async ({ dockerFilePath, dockerRepo, dockerContextDir, imageTag }) => {
-  await execCommand(`docker build -f ${dockerFilePath} -t ${dockerRepo} ${dockerContextDir}`);
+const buildAndPushImage = async ({ dockerFilePath, dockerRepo, dockerContextDir, imageTag, environment }) => {
+  await execCommand(`docker build \
+    --build-arg APP_ENV=${environment} \
+    --build-arg NODE_ENV=production \
+    -f ${dockerFilePath} \
+    -t ${dockerRepo} \
+    ${dockerContextDir}`);
   await execCommand(`docker tag ${dockerRepo} ${imageTag}`);
   await execCommand(`docker push ${imageTag}`);
 }
@@ -90,9 +95,17 @@ const deploy = async () => {
     imageTag = `${branch}.${commitSHA}`;
   }
   
-  await buildAndPushImage({ ...deployConfig, imageTag: `${deployConfig.dockerRepo}:${imageTag}` });
-  
-  await pushToKubernetes({ imageTag, appName: deployConfig.name, deployConfig });
+  await buildAndPushImage({
+    ...deployConfig,
+    imageTag: `${deployConfig.dockerRepo}:${imageTag}`,
+    environment: config.environment
+  });
+
+  await pushToKubernetes({
+    imageTag,
+    appName: deployConfig.name,
+    deployConfig
+  });
 }
 
 deploy();

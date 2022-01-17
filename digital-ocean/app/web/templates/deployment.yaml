@@ -21,9 +21,6 @@ spec:
       - name: web
         image: registry.digitalocean.com/paralect/ship-web:{{ .Values.imagesVersion }}
         imagePullPolicy: Always
-        env:
-        - name: NEXT_PUBLIC_APP_ENV
-          value: {{ .Values.environment }}
         ports:
         - containerPort: 3002
           protocol: TCP

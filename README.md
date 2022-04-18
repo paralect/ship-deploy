@@ -1,3 +1,5 @@
+# This repository is no longer maintained. Check [Ship](https://github.com/paralect/ship).
+
 # Getting Started
 
 Deploy scripts for Kubernetes 
